@@ -5,15 +5,13 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 // Process:
 // 1. fetch large JSON file
-// 2. pick out the fields we need, in this case let's go with RDP ID
-// 3. For each object inside of the data[] aray (responseData[0].data), push those into a new array (recurringIds)
-// 4. write these numbers to a CSV
-// let parsedData = JSON.parse(responseData);
+// 2. pick out the fields we need, in this case let's go with RDP and designation_id
+// 3. write these items to a CSV
 
-let arrData = [];
+let outputArr = [];
 
-newData = responseData.forEach((object) => {
-  arrData.push(_.pick(object, ['id', 'designation_id']));
+responseData.forEach((object) => {
+  outputArr.push(_.pick(object, ['id', 'designation_id']));
 });
 
 const csvWriter = createCsvWriter({
@@ -25,5 +23,5 @@ const csvWriter = createCsvWriter({
 });
 
 csvWriter
-  .writeRecords(arrData)
+  .writeRecords(outputArr)
   .then(() => console.log('CSV HAS BEEN WRITTEN MY LORD'));
